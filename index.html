@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Expense Tracker</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<header class="top-header">
+
+    <div class="header-content">
+
+        <div>
+            <h1>Expense Tracker</h1>
+            <p>Manage your money. Understand your spending. Save better.</p>
+        </div>
+
+        <button id="darkModeBtn" class="dark-btn">
+            🌙 Dark Mode
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- Navigation -->
+
+<nav class="navigation">
+
+    <a href="#dashboard">Dashboard</a>
+    <a href="#transactions">Transactions</a>
+    <a href="#analytics">Analytics</a>
+    <a href="#budget">Budget</a>
+    <a href="#dataManagement">Data</a>
+
+</nav>
+
+
+<main class="container">
+
+    <!-- Dashboard -->
+
+    <section id="dashboard" class="section">
+
+        <div class="section-title">
+            <div>
+                <h2>Dashboard</h2>
+                <p>Your financial overview</p>
+            </div>
+
+            <span id="lastUpdated" class="last-updated">
+                Last updated: —
+            </span>
+        </div>
+
+
+        <!-- Main Summary -->
+
+        <div class="summary-grid">
+
+            <div class="summary-card income-card">
+                <span>💰</span>
+                <h3>Total Income</h3>
+                <p id="totalIncome">₹0</p>
+            </div>
+
+            <div class="summary-card expense-card">
+                <span>💸</span>
+                <h3>Total Expenses</h3>
+                <p id="totalExpense">₹0</p>
+            </div>
+
+            <div class="summary-card balance-card">
+                <span>💵</span>
+                <h3>Balance</h3>
+                <p id="balance">₹0</p>
+            </div>
+
+            <div class="summary-card">
+                <span>📅</span>
+                <h3>This Month</h3>
+                <p id="monthlyExpense">₹0</p>
+            </div>
+
+            <div class="summary-card">
+                <span>🧾</span>
+                <h3>Transactions</h3>
+                <p id="transactionCount">0</p>
+            </div>
+
+        </div>
+
+
+        <!-- Quick Overview -->
+
+        <div class="dashboard-section">
+
+            <h2>Quick Overview</h2>
+
+            <div class="overview-grid">
+
+                <div class="overview-card">
+                    <span>📈</span>
+                    <div>
+                        <h3>Monthly Income</h3>
+                        <p id="currentMonthIncome">₹0</p>
+                    </div>
+                </div>
+
+                <div class="overview-card">
+                    <span>📉</span>
+                    <div>
+                        <h3>Monthly Expenses</h3>
+                        <p id="currentMonthExpenses">₹0</p>
+                    </div>
+                </div>
+
+                <div class="overview-card">
+                    <span>💎</span>
+                    <div>
+                        <h3>Monthly Savings</h3>
+                        <p id="currentMonthSavings">₹0</p>
+                    </div>
+                </div>
+
+                <div class="overview-card">
+                    <span>🧮</span>
+                    <div>
+                        <h3>Average Expense</h3>
+                        <p id="averageExpense">₹0</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Spending Insights -->
+
+        <div class="dashboard-section">
+
+            <h2>Spending Insights</h2>
+
+            <div class="insights-grid">
+
+                <div class="insight-card">
+                    <span>🏆</span>
+                    <h3>Highest Spending Category</h3>
+                    <p id="highestCategory">No data</p>
+                </div>
+
+                <div class="insight-card">
+                    <span>🧾</span>
+                    <h3>Expense Transactions</h3>
+                    <p id="expenseTransactionCount">0</p>
+                </div>
+
+                <div class="insight-card">
+                    <span>📊</span>
+                    <h3>Budget Used</h3>
+                    <p id="dashboardBudgetPercent">0%</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Transactions -->
+
+    <section id="transactions" class="section">
+
+        <div class="section-title">
+            <div>
+                <h2>Transactions</h2>
+                <p>Add and manage your income and expenses</p>
+            </div>
+        </div>
+
+
+        <!-- Add Transaction -->
+
+        <div class="form-section">
+
+            <h2 id="formTitle">Add Transaction</h2>
+
+            <form id="expenseForm">
+
+                <div class="form-grid">
+
+                    <div>
+                        <label for="description">
+                            Description
+                        </label>
+
+                        <input
+                            type="text"
+                            id="description"
+                            placeholder="Example: Grocery shopping"
+                            required
+                        >
+                    </div>
+
+
+                    <div>
+                        <label for="amount">
+                            Amount
+                        </label>
+
+                        <input
+                            type="number"
+                            id="amount"
+                            placeholder="Example: 500"
+                            min="0"
+                            step="0.01"
+                            required
+                        >
+                    </div>
+
+
+                    <div>
+                        <label for="category">
+                            Category
+                        </label>
+
+                        <select id="category" required>
+
+                            <option value="">
+                                Select Category
+                            </option>
+
+                            <option value="Food">
+                                Food
+                            </option>
+
+                            <option value="Travel">
+                                Travel
+                            </option>
+
+                            <option value="Shopping">
+                                Shopping
+                            </option>
+
+                            <option value="Bills">
+                                Bills
+                            </option>
+
+                            <option value="Education">
+                                Education
+                            </option>
+
+                            <option value="Entertainment">
+                                Entertainment
+                            </option>
+
+                            <option value="Health">
+                                Health
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+                    </div>
+
+
+                    <div>
+                        <label for="date">
+                            Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="date"
+                            required
+                        >
+                    </div>
+
+
+                    <div>
+                        <label for="type">
+                            Transaction Type
+                        </label>
+
+                        <select id="type" required>
+
+                            <option value="expense">
+                                Expense
+                            </option>
+
+                            <option value="income">
+                                Income
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-buttons">
+
+                    <button
+                        type="submit"
+                        class="primary-btn"
+                        id="submitBtn"
+                    >
+                        Add Transaction
+                    </button>
+
+                    <button
+                        type="button"
+                        id="cancelEdit"
+                        class="secondary-btn"
+                        style="display:none;"
+                    >
+                        Cancel Edit
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+        <!-- Search and Filters -->
+
+        <div class="filter-section">
+
+            <h2>Search & Filter</h2>
+
+            <div class="filter-grid">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="🔍 Search description or category..."
+                >
+
+
+                <select id="categoryFilter">
+
+                    <option value="all">
+                        All Categories
+                    </option>
+
+                    <option value="Food">Food</option>
+                    <option value="Travel">Travel</option>
+                    <option value="Shopping">Shopping</option>
+                    <option value="Bills">Bills</option>
+                    <option value="Education">Education</option>
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="Health">Health</option>
+                    <option value="Other">Other</option>
+
+                </select>
+
+
+                <select id="typeFilter">
+
+                    <option value="all">
+                        All Types
+                    </option>
+
+                    <option value="income">
+                        Income
+                    </option>
+
+                    <option value="expense">
+                        Expense
+                    </option>
+
+                </select>
+
+
+                <input
+                    type="month"
+                    id="monthFilter"
+                >
+
+
+                <button
+                    id="clearFilter"
+                    class="secondary-btn"
+                    type="button"
+                >
+                    Clear Filters
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- Monthly Report -->
+
+        <div class="report-section">
+
+            <h2>Monthly Expense Report</h2>
+
+            <div class="report-grid">
+
+                <div>
+                    <span>Income</span>
+                    <strong id="reportIncome">₹0</strong>
+                </div>
+
+                <div>
+                    <span>Expenses</span>
+                    <strong id="reportExpense">₹0</strong>
+                </div>
+
+                <div>
+                    <span>Balance</span>
+                    <strong id="reportBalance">₹0</strong>
+                </div>
+
+                <div>
+                    <span>Transactions</span>
+                    <strong id="reportCount">0</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Transaction List -->
+
+        <div class="transaction-section">
+
+            <div class="transaction-header">
+
+                <h2>Transactions List</h2>
+
+                <button
+                    id="exportCSV"
+                    class="secondary-btn"
+                    type="button"
+                >
+                    📥 Export CSV
+                </button>
+
+            </div>
+
+
+            <div id="transactionList">
+
+                <div class="empty-state">
+                    <div class="empty-icon">📭</div>
+                    <h3>No transactions yet</h3>
+                    <p>Add your first transaction above.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Analytics -->
+
+    <section id="analytics" class="section">
+
+        <div class="section-title">
+
+            <div>
+                <h2>Analytics</h2>
+                <p>Understand where your money goes</p>
+            </div>
+
+        </div>
+
+
+        <div class="analytics-grid">
+
+            <div class="analytics-card">
+                <span>📂</span>
+                <h3>Expense Categories</h3>
+                <p id="analyticsCategories">0</p>
+            </div>
+
+            <div class="analytics-card">
+                <span>💸</span>
+                <h3>Largest Expense</h3>
+                <p id="largestExpense">₹0</p>
+            </div>
+
+            <div class="analytics-card">
+                <span>📊</span>
+                <h3>Average Monthly Expense</h3>
+                <p id="averageMonthlyExpense">₹0</p>
+            </div>
+
+            <div class="analytics-card">
+                <span>📈</span>
+                <h3>Expense Change</h3>
+                <p id="expenseChange">0%</p>
+            </div>
+
+        </div>
+
+
+        <!-- Charts -->
+
+        <div class="charts-grid">
+
+            <div class="chart-card">
+
+                <h2>Expense by Category</h2>
+
+                <div class="chart-container">
+                    <canvas id="categoryChart"></canvas>
+                </div>
+
+            </div>
+
+
+            <div class="chart-card">
+
+                <h2>Income vs Expense</h2>
+
+                <div class="chart-container">
+                    <canvas id="incomeExpenseChart"></canvas>
+                </div>
+
+            </div>
+
+
+            <div class="chart-card">
+
+                <h2>Monthly Expenses</h2>
+
+                <div class="chart-container">
+                    <canvas id="monthlyExpenseChart"></canvas>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Category Breakdown -->
+
+        <div class="analytics-box">
+
+            <h2>Category Spending Breakdown</h2>
+
+            <div id="categoryBreakdown">
+
+                <div class="empty-state">
+                    <p>No expense data available.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Month Comparison -->
+
+        <div class="analytics-box">
+
+            <h2>Month-to-Month Comparison</h2>
+
+            <div id="monthComparison">
+
+                <div class="empty-state">
+                    <p>No monthly data available.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Budget -->
+
+    <section id="budget" class="section">
+
+        <div class="section-title">
+
+            <div>
+                <h2>Monthly Budget</h2>
+                <p>Set a spending limit and track your progress</p>
+            </div>
+
+        </div>
+
+
+        <div class="budget-section">
+
+            <div class="budget-input-area">
+
+                <div>
+
+                    <label for="budgetMonth">
+                        Budget Month
+                    </label>
+
+                    <input
+                        type="month"
+                        id="budgetMonth"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label for="budgetAmount">
+                        Monthly Budget
+                    </label>
+
+                    <input
+                        type="number"
+                        id="budgetAmount"
+                        placeholder="Example: 10000"
+                        min="0"
+                    >
+
+                </div>
+
+
+                <button
+                    id="saveBudget"
+                    class="primary-btn"
+                    type="button"
+                >
+                    Save Budget
+                </button>
+
+            </div>
+
+
+            <div class="budget-info">
+
+                <div>
+                    <span>Budget</span>
+                    <strong id="budgetDisplay">₹0</strong>
+                </div>
+
+                <div>
+                    <span>Spent</span>
+                    <strong id="budgetSpent">₹0</strong>
+                </div>
+
+                <div>
+                    <span>Remaining</span>
+                    <strong id="budgetRemaining">₹0</strong>
+                </div>
+
+            </div>
+
+
+            <div class="progress-container">
+
+                <div class="progress-header">
+
+                    <span>Budget Usage</span>
+
+                    <strong id="budgetPercent">
+                        0%
+                    </strong>
+
+                </div>
+
+                <div class="progress-bar">
+
+                    <div
+                        id="budgetProgress"
+                        class="progress-fill"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <p id="budgetMessage" class="budget-message"></p>
+
+        </div>
+
+    </section>
+
+
+    <!-- Data Management -->
+
+    <section id="dataManagement" class="section">
+
+        <div class="section-title">
+
+            <div>
+                <h2>Data Management</h2>
+                <p>Backup, restore, or reset your data</p>
+            </div>
+
+        </div>
+
+
+        <div class="data-section">
+
+            <p class="data-description">
+
+                Your data is stored in your browser's Local Storage.
+                You can download a complete backup at any time.
+
+            </p>
+
+
+            <div class="data-buttons">
+
+                <button
+                    id="backupData"
+                    class="primary-btn"
+                    type="button"
+                >
+                    💾 Download Backup
+                </button>
+
+
+                <label
+                    for="restoreFile"
+                    class="secondary-btn restore-btn"
+                >
+                    📂 Restore Backup
+                </label>
+
+                <input
+                    type="file"
+                    id="restoreFile"
+                    accept=".json"
+                    hidden
+                >
+
+
+                <button
+                    id="deleteTransactions"
+                    class="danger-btn"
+                    type="button"
+                >
+                    🗑 Delete All Transactions
+                </button>
+
+
+                <button
+                    id="resetApp"
+                    class="reset-btn"
+                    type="button"
+                >
+                    ⚠ Reset Entire App
+                </button>
+
+            </div>
+
+
+            <p id="dataMessage"></p>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- Toast -->
+
+<div
+    id="toast"
+    class="toast"
+    role="status"
+    aria-live="polite"
+>
+</div>
+
+
+<footer>
+
+    <p>
+        Expense Tracker
+        <span>•</span>
+        Version 10.0
+    </p>
+
+    <p>
+        Your data stays in your browser.
+    </p>
+
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
