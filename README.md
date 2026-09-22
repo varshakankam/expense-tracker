@@ -82,6 +82,17 @@ Users can:
 
 The goal of this project is to create a simple yet professional financial management application that helps users manage their income, track expenses, set monthly budgets, and understand their spending patterns through analytics and visualizations.
 
+## 📸 Screenshots
+
+### Dashboard
+![Expense Tracker Dashboard](screenshots/dashboard.png)
+
+### Transactions
+![Expense Tracker Transactions](screenshots/transactions.png)
+
+### Monthly Budget
+![Expense Tracker Budget](screenshots/budget.png)
+
 ## 👩‍💻 Author
 
 **Varsha Kanakam**
